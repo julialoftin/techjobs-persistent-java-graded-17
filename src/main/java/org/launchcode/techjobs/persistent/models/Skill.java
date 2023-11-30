@@ -5,18 +5,22 @@ import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Skill extends AbstractEntity {
 
     @ManyToMany(mappedBy = "skills")
-    private Job job;
+    private List<Job> jobs = new ArrayList<>();
 
     @NotBlank
     @Size(max = 250, message = "Description may not be longer than 250 characters")
     private String description;
 
-    public Skill(String description) {
+    public Skill(String description, List<Job> jobs) {
         this.description = description;
+        this.jobs = jobs;
     }
 
     public Skill() {}
@@ -29,18 +33,18 @@ public class Skill extends AbstractEntity {
         this.description = description;
     }
 
-    public Job getJob() {
-        return job;
+    public List<Job> getJobs() {
+        return jobs;
     }
 
-    public void setJob(Job job) {
-        this.job = job;
+    public void setJob(List<Job> jobs) {
+        this.jobs = jobs;
     }
 
     @Override
     public String toString() {
         return "Skill{" +
-                "job=" + job +
+                "jobs=" + jobs +
                 ", description='" + description + '\'' +
                 '}';
     }
